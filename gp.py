@@ -6,14 +6,6 @@ from scipy.stats import multivariate_normal
 import matplotlib.pyplot as plt
 import math
 
-#Prior
-#Create a GP-prior with a squared exponential co-variance function.
-xdata=[]
-x=np.arange(-math.pi,math.pi+0.1,0.05)
-x=np.array(x)
-
-priorMu=np.zeros(len(x))
-
 def kernel(xi,xj,sigma,lengthscale):
     return (np.power(sigma,2)*np.exp(-np.power(xi-xj,2)/np.power(lengthscale,2)))
 
@@ -75,6 +67,14 @@ def getPostSample(xnew,sigma,l):
     postCov=knewnew-np.dot(knewold,np.dot(np.linalg.inv((koldold)),koldnew))
 
     return np.random.multivariate_normal(postMu,postCov,7)
+
+#Prior
+#Create a GP-prior with a squared exponential co-variance function.
+xdata=[]
+x=np.arange(-math.pi,math.pi+0.1,0.05)
+x=np.array(x)
+
+priorMu=np.zeros(len(x))
 
 #Sample from this prior and visualise the samples
 #Show samples using different length-scale for the squared exponential
